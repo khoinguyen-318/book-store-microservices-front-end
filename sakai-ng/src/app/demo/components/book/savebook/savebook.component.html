@@ -1,0 +1,83 @@
+<div class="grid">
+	<div class="col-12">
+		<div class="card">
+			<h5>Book Details</h5>
+			<div class="p-fluid p-formgrid grid">
+                <p-toast></p-toast>
+				<div class="field col-12 md:col-12">
+					<label htmlFor="title">Title</label>
+					<input pInputText id="title" type="text" [(ngModel)]="book.title" (keyup)="genarateSlug($event)" [ngClass]="{'ng-invalid ng-dirty' : submitted && !book.title}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !book.title">Title is required.</small>
+                </div>
+				<div class="field col-12 md:col-12">
+					<label htmlFor="slug">Slug</label>
+					<input pInputText id="slug" type="text" [(ngModel)]="book.slug" [ngClass]="{'ng-invalid ng-dirty' : submitted && !book.slug}">
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !book.slug">Slug is required.</small>
+				</div>
+                <div class="field col-12 md:col-12">
+					<label htmlFor="image">Images</label>
+					<p-fileUpload [multiple]="true" [showCancelButton]="false" [customUpload]="true" (uploadHandler)="onUpload($event)" accept="image/*" [maxFileSize]="1000000">
+                        <ng-template pTemplate="content">
+                            <ul *ngIf="files.size">
+                                <li *ngFor="let file of files">{{ file.name }} - {{ file.size }} bytes</li>
+                            </ul>
+                        </ng-template>
+                    </p-fileUpload>
+				</div>
+				<div class="field col-6 md:col-6">
+					<label>Price</label>
+                    <p-inputNumber [showButtons]="true" [min]="0" [(ngModel)]="book.price" inputId="stacked" mode="currency" currency="USD" [ngClass]="{'ng-invalid ng-dirty' : submitted && !book.price}"> </p-inputNumber>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !book.price">Price is required.</small>
+				</div>
+				<div class="field col-6 md:col-6">
+					<label>Category</label>
+					<p-dropdown [options]="categories" optionValue="id" [(ngModel)]="book.categoryId" optionLabel="name"></p-dropdown>
+				</div>
+                <div class="field col-12 md:col-6">
+					<label>Author</label>
+                    <p-chips [(ngModel)]="book.author" placeholder="Hint: a then press Enter" [ngClass]="{'ng-invalid ng-dirty' : submitted && !book.author}"></p-chips>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !book.author">Author is required.</small>
+				</div>
+                <div class="field col-12 md:col-3">
+					<label>Publication Date</label>
+					<p-calendar [showIcon]="true" [(ngModel)]="book.publicationDate" [ngClass]="{'ng-invalid ng-dirty' : submitted && !book.publicationDate}"></p-calendar>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !book.publicationDate">PublicationDate is required.</small>
+				</div>
+                <div class="field col-12 md:col-3">
+					<label>Page count</label>
+                    <p-inputNumber [(ngModel)]="book.pageCount" [showButtons]="true" [min]="0" inputId="stacked" [ngClass]="{'ng-invalid ng-dirty' : submitted && !book.pageCount}"> </p-inputNumber>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !book.pageCount">PageCount is required.</small>
+				</div>
+                <div class="field col-12 md:col-4">
+					<label>Publisher</label>
+					<input pInputText type="text" [(ngModel)]="book.publisher" [ngClass]="{'ng-invalid ng-dirty' : submitted && !book.publisher}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !book.publisher">Publisher is required.</small>
+				</div>
+                <div class="field col-12 md:col-4">
+					<label>Series</label>
+					<input pInputText type="text" [(ngModel)]="book.series"/>
+				</div>
+                <div class="field col-12 md:col-4">
+					<label>Activated</label>
+					<div class="formgrid grid">
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton id="activated1" name="activated" value="true" [(ngModel)]="book.activated"></p-radioButton>
+                            <label for="activated1">True</label>
+                        </div>
+                        <div class="field-radiobutton col-6">
+                            <p-radioButton id="activated2" name="activated" value="false" [(ngModel)]="book.activated"></p-radioButton>
+                            <label for="activated2">False</label>
+                        </div>
+                    </div>
+				</div>
+                <div class="field col-12 md:col-12">
+					<label htmlFor="Description">Description</label>
+					<p-editor id="Description" [style]="{ height: '320px' }" [(ngModel)]="book.description"></p-editor>
+				</div>
+                <div class="field col-12 md:col-3">
+                    <p-button label="Submit" icon="pi pi-check" (onClick)="saveBook()"></p-button>
+                </div>
+			</div>
+		</div>
+	</div>
+</div>

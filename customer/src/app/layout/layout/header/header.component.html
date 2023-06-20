@@ -1,0 +1,53 @@
+<div class="layout-topbar">
+  <a class="layout-topbar-logo" routerLink="">
+    <img src="assets/images/logo-dark.svg" alt="logo" />
+    <span>OWEN</span>
+  </a>
+  <button
+    #topbarmenubutton
+    class="p-link layout-topbar-menu-button layout-topbar-button"
+    (click)="layoutService.showProfileSidebar()"
+  >
+    <i class="pi pi-ellipsis-v"></i>
+  </button>
+  <button class="p-link layout-topbar-button" routerLink="/">
+    <i class="pi pi-home"></i>
+    <span>Home</span>
+  </button>
+  <button class="p-link layout-topbar-button" routerLink="/category">
+    <i class="pi pi-bars"></i>
+    <span>Categories</span>
+  </button>
+  <button class="p-link layout-topbar-button" routerLink="/about">
+    <i class="pi pi-info-circle"></i>
+    <span>About</span>
+  </button>
+  <div
+    #topbarmenu
+    class="layout-topbar-menu"
+    [ngClass]="{
+      'layout-topbar-menu-mobile-active':
+        layoutService.state.profileSidebarVisible
+    }"
+  >
+    <button class="p-link layout-topbar-button" routerLink="/cart">
+      <!-- <i class="pi pi-shopping-cart" pBadge value="{{totalItem}}" severity="danger"></i> -->
+      <i class="pi pi-shopping-cart"></i>
+      <span>Cart</span>
+    </button>
+    <button
+      class="p-link layout-topbar-button"
+      (click)="logout()"
+      *ngIf="isLoggedIn; else loggin"
+    >
+      <i class="pi pi-sign-out"></i>
+      <span>Sign out</span>
+    </button>
+    <ng-template #loggin>
+      <button class="p-link layout-topbar-button" (click)="handleLogin()">
+        <i class="pi pi-sign-in"></i>
+        <span>Sign in</span>
+      </button>
+    </ng-template>
+  </div>
+</div>

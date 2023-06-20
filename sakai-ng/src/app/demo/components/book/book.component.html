@@ -1,0 +1,125 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button type="button" pButton pRipple icon="pi pi-file" (click)="dt.exportCSV()" class="mr-2"  pTooltip="CSV" tooltipPosition="bottom"></button>
+                        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()" class="p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                        <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportPdf()" class="p-button-warning ml-auto" pTooltip="PDF" tooltipPosition="bottom"></button>
+                    </div>
+                </ng-template>
+            </p-toolbar>
+            <p-table #dt [value]="books" [columns]="cols"
+            responsiveLayout="scroll"
+            [lazy]="true"
+            (onLazyLoad)="refreshData($event)"
+            [rows]="10"
+            [rowsPerPageOptions]="[10,20,30]"
+            [totalRecords]="totalRecords"
+            [paginator]="true"
+            [globalFilterFields]="['title','id','author','publisher','price']"
+            [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Manage Book</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 5rem"></th>
+                        <th pSortableColumn="id">ID<p-sortIcon field="id"></p-sortIcon></th>
+                        <th pSortableColumn="title">Title<p-sortIcon field="title"></p-sortIcon></th>
+                        <th pSortableColumn="price">Price<p-sortIcon field="price"></p-sortIcon></th>
+                        <th>Status</th>
+                        <th>#</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-book>
+                    <tr>
+                        <td><p-button type="button" icon="pi pi-info-circle" (onClick)="detail(book)"></p-button></td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
+                            {{book.id}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Title</span>
+                            {{book.title}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Price</span>
+                            {{book.price}}
+                        </td>
+                        <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Activated</span>
+                            <span [class]="'product-badge status-' + (book.activated ? 'instock' : 'outofstock')">{{book.activated}}</span>
+                        </td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editBook(book)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteBook(book)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <p-dialog [(visible)]="deleteBookDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="book">Are you sure you want to delete?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteBookDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+        <p-dialog [(visible)]="detailBookDialog" header="Detail" [modal]="true" [style]="{width:'450px'}">
+            <ng-template pTemplate="content">
+                <p-fieldset legend="Images" [toggleable]="true">
+                    <p-carousel [value]="images" [numVisible]="1" [numScroll]="1" [circular]="false" [responsiveOptions]="responsiveOptions">
+                        <ng-template let-image pTemplate="item">
+                            <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+                                <img src="{{image}}" class="w-full shadow-2" />
+                            </div>
+                        </ng-template>
+                    </p-carousel>
+                </p-fieldset>
+                <p-fieldset legend="Some info book" [toggleable]="true">
+                    <div class="field">
+                        <label class="font-bold">Title</label>
+                        <p class="ml-3">{{book.title}}</p>
+                    </div>
+                    <div class="field">
+                        <label class="font-bold">Slug</label>
+                        <p class="ml-3">{{book.slug}}</p>
+                    </div>
+                    <div class="field">
+                        <label class="font-bold">Price</label>
+                        <p class="ml-3">{{book.price|currency}}</p>
+                    </div>
+                </p-fieldset>
+                <p-fieldset legend="Author and publisher" [toggleable]="true">
+                    <div class="field">
+                        <label class="font-bold">Author</label>
+                        <p class="ml-3">{{book.author}}</p>
+                    </div>
+                    <div class="field">
+                        <label class="font-bold">Publisher</label>
+                        <p class="ml-3">{{book.publisher}}</p>
+                    </div>
+                    <div class="field">
+                        <label class="font-bold">Series</label>
+                        <p class="ml-3">{{book.series}}</p>
+                    </div>
+                </p-fieldset>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="OK" (click)="detailBookDialog = false"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>

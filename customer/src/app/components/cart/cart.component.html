@@ -1,0 +1,40 @@
+<div class="card">
+  <p-table [value]="itemsCart">
+      <ng-template pTemplate="caption">
+          <div class="flex align-items-center justify-content-between">
+              Shopping Cart
+          </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+          <tr>
+              <th>Image</th>
+              <th>Title</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Remove</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-book>
+          <tr>
+            <td><img [src]="book.imagesUrl!" [alt]="book.title!" width="100" class="shadow-4" /></td>
+            <td>{{book.title!}}</td>
+            <td>{{book.quantity!}}</td>
+            <td>{{book.price! | currency:'USD'}}</td>
+            <td>
+              <p-button label="Remove" styleClass="p-button-danger"></p-button>
+            </td>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+          <div class="flex flex-column align-items-center justify-content-center">
+            <div>
+              Total price: {{totalPrice | currency }}
+            </div>
+            <br>
+            <div>
+              <p-button routerLink="checkout" label="Check-out" styleClass="p-button-success"></p-button>
+            </div>
+          </div>
+      </ng-template>
+  </p-table>
+</div>

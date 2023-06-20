@@ -1,0 +1,61 @@
+<div class="card">
+  <div class="grid">
+      <div class="col-6 flex align-items-center justify-content-center">
+        <form [formGroup]="formGroup" novalidate (ngSubmit)="onOrder()">
+          <div class="p-fluid">
+            <div class="field">
+              <label htmlFor="address">Address</label>
+              <input pInputText id="address" formControlName="address" aria-describedby="address-help" />
+              <small id="address-help">Enter your address to ship.</small>
+            </div>
+            <div class="field">
+              <label htmlFor="Phone">Phone</label>
+              <input pInputText id="Phone" formControlName="phone" aria-describedby="Phone-help" />
+              <small id="Phone-help">Enter your phone to ship.</small>
+            </div>
+            <div class="field">
+              <label htmlFor="payment">Payment method</label>
+              <p-dropdown [options]="methods" formControlName="paymentMethod" optionLabel="name"></p-dropdown>
+            </div>
+            <p-button label="Order" type="submit" [disabled]="formGroup.invalid"></p-button>
+          </div>
+        </form>
+      </div>
+      <div class="col-1">
+          <p-divider layout="vertical">
+              <b>BOOKS</b>
+          </p-divider>
+      </div>
+      <div class="col-5 flex align-items-center justify-content-center">
+        <div class="p-fluid">
+          <p-table [value]="itemsInCart">
+            <ng-template pTemplate="caption">
+              <div class="flex align-items-center justify-content-between">
+                  Items
+              </div>
+          </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                  <th>Title</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td>{{ product.title }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>{{ product.price |currency}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+              <div class="flex align-items-center justify-content-between">
+                Total price: {{totalPrice|currency}}
+            </div>
+            </ng-template>
+        </p-table>
+        </div>
+      </div>
+  </div>
+</div>
+

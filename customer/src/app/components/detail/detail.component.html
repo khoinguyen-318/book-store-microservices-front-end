@@ -1,0 +1,59 @@
+<dir *ngIf="book">
+  <div class="surface-card p-4 shadow-2 border-round">
+    <p-breadcrumb class="max-w-full" [model]="items" [home]="home"></p-breadcrumb>
+    <p-divider></p-divider>
+    <div class="grid h-30rem">
+      <div class="col-3">
+        <div class="surface-border" width="500">
+          <img [src]="book.imagesUrl" [alt]="book.title" class="w-full" />
+        </div>
+      </div>
+      <div class="col-8">
+        <div class="surface-border w-full">
+          <div class="text-3xl font-medium text-900 mb-3">
+            {{book.title}}
+          </div>
+          <div class="grid">
+            <div class="col-6 font-medium text-500 mb-3">
+              Author: {{book.author}}
+            </div>
+            <div class="col-6 font-medium text-500 mb-3">
+              Publisher: {{book.publisher}}
+          </div>
+          </div>
+          <div class="grid">
+            <div class="col-6 font-medium text-500 mb-3">
+              Page count: {{book.pageCount}}
+            </div>
+            <div class="col-6 font-medium text-500 mb-3">
+              Pub.Date: {{book.publicationDate | date:'dd/MM/yyyy' }}
+          </div>
+          </div>
+          <div class="text-3xl font-medium text-900 mb-3 text-red-500">
+            {{book.price | currency}}
+          </div>
+          <div class="text-3xl font-medium text-900 mb-3">
+            <p-inputNumber
+            [(ngModel)]="quantity"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            inputId="horizontal"
+            spinnerMode="horizontal"
+            [step]="1"
+            [min]="1"
+            incrementButtonIcon="pi pi-plus"
+            decrementButtonIcon="pi pi-minus"></p-inputNumber>
+            <p-button class="p-5" label="Add to cart" icon="pi pi-cart-plus" (onClick)="addToCart(book.id!,quantity)"></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p-divider></p-divider>
+    <p-divider></p-divider>
+    <div class="text-3xl font-medium text-900 mb-3">Description</div>
+    <div class="surface-border font-medium text-500 mb-3" [innerHTML]="book.description">
+    </div>
+    <p-divider></p-divider>
+    <!-- <app-relate></app-relate> -->
+  </div>
+</dir>
