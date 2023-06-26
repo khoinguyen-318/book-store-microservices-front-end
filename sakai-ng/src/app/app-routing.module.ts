@@ -14,6 +14,7 @@ import { AppLayoutComponent } from "./layout/app.layout.component";
                     { path: '', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
                     { path: 'category', loadChildren: () => import('./demo/components/category/category.module').then(m => m.CategoryModule) },
                     { path: 'book', loadChildren: () => import('./demo/components/book/book.module').then(m => m.BookModule) },
+                    { path: 'order', loadChildren: () => import('./demo/components/order/order.module').then(m => m.OrderModule) },
                 ]
             },
             { path: 'notfound', component: NotfoundComponent },

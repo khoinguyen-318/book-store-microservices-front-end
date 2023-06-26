@@ -26,10 +26,11 @@ const routes: Routes = [
         path: ':slug/:id',
         loadChildren: () => import('./components/detail/detail.module').then((m) => m.DetailModule),
       },
-      // {
-      //   path: 'checkout',
-      //   loadChildren: () => import('./components/checkout/checkout.module').then((m) => m.CheckoutModule),
-      // },
+      {
+        path: 'profile',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./components/profile/profile.module').then((m) => m.ProfileModule),
+      },
     ],
   },
   { path: 'notfound', component: NotfoundComponent },

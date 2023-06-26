@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from "primeng/button";
 import { MenubarModule } from 'primeng/menubar';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
+import { MenuModule } from 'primeng/menu';
 @NgModule({
   declarations: [LayoutComponent, HeaderComponent, FooterComponent],
   imports: [
@@ -32,7 +32,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     ButtonModule,
     FormsModule,
     MenubarModule,
-    ScrollTopModule
+    ScrollTopModule,
+    MenuModule
   ],
   exports:[LayoutComponent],
 })

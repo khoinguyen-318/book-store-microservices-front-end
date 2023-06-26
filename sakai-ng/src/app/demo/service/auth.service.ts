@@ -54,8 +54,8 @@ export class AuthService {
     public hasValidToken() { return this.oauthService.hasValidAccessToken(); }
     public getFullname() {
         let claims: any = this.oauthService.getIdentityClaims();
-        if (claims && claims.name) {
-          return claims.name;
+        if (claims && claims.email) {
+          return claims.email;
         }
         return undefined;
       }

@@ -10,9 +10,15 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { PaymentComponent } from './payment/payment.component';
+import { MessagesModule } from 'primeng/messages';
+import { ToastModule } from 'primeng/toast';
 @NgModule({
   declarations: [
-    CheckoutComponent
+    CheckoutComponent,
+    PaymentComponent,
   ],
   imports: [
     CommonModule,
@@ -23,7 +29,11 @@ import { TableModule } from 'primeng/table';
     DropdownModule,
     FormsModule,
     ReactiveFormsModule,
-    TableModule
+    TableModule,
+    DialogModule,
+    DynamicDialogModule,
+    MessagesModule,
+    ToastModule
   ]
 })
 export class CheckoutModule { }

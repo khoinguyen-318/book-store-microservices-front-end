@@ -35,13 +35,13 @@
       <i class="pi pi-shopping-cart"></i>
       <span>Cart</span>
     </button>
+    <p-menu #menu [model]="items" [popup]="true"></p-menu>
     <button
       class="p-link layout-topbar-button"
-      (click)="logout()"
-      *ngIf="isLoggedIn; else loggin"
-    >
-      <i class="pi pi-sign-out"></i>
-      <span>Sign out</span>
+      (click)="menu.toggle($event)"
+      *ngIf="isLoggedIn; else loggin">
+      <i class="pi pi-user"></i>
+      <span>User</span>
     </button>
     <ng-template #loggin>
       <button class="p-link layout-topbar-button" (click)="handleLogin()">

@@ -1,3 +1,5 @@
+import { BookService } from 'app/demo/service/book.service';
+import { OrderService } from 'app/demo/service/order.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Product } from '../../api/product';
@@ -6,6 +8,7 @@ import { LayoutService } from 'app/layout/service/app.layout.service';
 
 @Component({
     templateUrl: './dashboard.component.html',
+    providers: [OrderService,BookService]
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
@@ -18,8 +21,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     chartOptions: any;
 
     subscription!: Subscription;
+    totalPrice :number = 0;
+    count:number = 0;
+    customer: number = 0;
 
-    constructor( public layoutService: LayoutService) {
+    constructor( public layoutService: LayoutService,
+                    private orderService:OrderService,
+                    private bookService:BookService) {
         this.subscription = this.layoutService.configUpdate$.subscribe(() => {
             this.initChart();
         });
@@ -27,11 +35,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.initChart();
+        this.getAllOrder();
 
         this.items = [
             { label: 'Add New', icon: 'pi pi-fw pi-plus' },
             { label: 'Remove', icon: 'pi pi-fw pi-minus' }
         ];
+    }
+    getAllOrder(){
+        this.orderService.getAllOrder().subscribe((data:any)=>{
+            this.count = data.length;
+            const user:any = {};
+            for (const item of data) {
+                this.totalPrice +=item.totalPrice;
+                user[item.customer] = (user[item.customer] || 0) + 1;
+            }
+            this.customer = Object.keys(user).length;
+        })
     }
 
     initChart() {

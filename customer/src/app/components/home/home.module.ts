@@ -7,7 +7,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { CarouselModule } from 'primeng/carousel';
 import { BooksComponent } from './books/books.component';
 import { ButtonModule } from 'primeng/button';
-
+import { ToastModule } from 'primeng/toast';
 @NgModule({
   declarations: [
     HomeComponent,
@@ -18,7 +18,8 @@ import { ButtonModule } from 'primeng/button';
     CommonModule,
     HomeRoutingModule,
     CarouselModule,
-    ButtonModule
+    ButtonModule,
+    ToastModule
   ]
 })
 export class HomeModule { }

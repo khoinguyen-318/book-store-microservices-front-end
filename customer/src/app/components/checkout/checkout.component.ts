@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { PaymentService, PaymentDto } from './../services/payment.service';
 import { AuthService } from './../services/auth.service';
 import { OrderDto } from 'src/app/apis/orderDto';
@@ -19,11 +20,13 @@ export class CheckoutComponent implements OnInit {
   methods!: Method[];
   itemsInCart!: ItemInCart[];
   totalPrice = 0;
+  showDialogPayment = false;
   constructor(
     private shareService: ShareService,
     private AuthService: AuthService,
     private paymentService: PaymentService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private Router:Router
   ) {}
   ngOnInit() {
     this.methods = [
@@ -53,7 +56,6 @@ export class CheckoutComponent implements OnInit {
       phone: phone,
     };
     this.orderService.createOrder(Order).subscribe((data: any) => {
-      console.log(data);
       if (paymentMethod === 'PAYPAL') {
         const paymentDto: PaymentDto = {
           intent: 'CAPTURE',
@@ -71,16 +73,12 @@ export class CheckoutComponent implements OnInit {
           .subscribe((data: any) => {
             for (const link of data.links) {
               if (link.rel == 'approve') {
-                const windowName: string = 'Payment Window';
-                const width: number = 500;
-                const height: number = 600;
-                const left: number = window.innerWidth / 2 - width / 2;
-                const top: number = window.innerHeight / 2 - height / 2;
-                const features: string = `width=${width},height=${height},left=${left},top=${top}`;
-                window.open(link.href, windowName, features);
+                window.open(link.href,'_self');
               }
             }
           });
+      } else {
+        this.Router.navigate(['cart/checkout/payment/success'])
       }
     });
   }

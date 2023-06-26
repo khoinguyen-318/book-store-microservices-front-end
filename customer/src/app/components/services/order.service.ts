@@ -11,7 +11,6 @@ export class OrderService {
   constructor(private http: HttpClient) { }
 
   createOrder(order:OrderDto){
-    console.log(order);
     return this.http.post(`${API.BASE_URL}/api/v1/orders`,order,{responseType:'text'});
   }
 }

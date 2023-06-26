@@ -1,8 +1,8 @@
 import { AuthService } from './../../../components/services/auth.service';
-import { KeycloakService } from 'keycloak-angular';
 import { CartService } from './../../../components/services/cart.service';
 import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../services/app.layout.service';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-header',
@@ -10,34 +10,38 @@ import { LayoutService } from '../services/app.layout.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  items!: MenuItem[];
   isLoggedIn: boolean = false;
   totalItem: number = 0;
-  userId= '';
+  userId = '';
+  userName = '';
   constructor(
     public layoutService: LayoutService,
     private cartService: CartService,
-    private authService:AuthService
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isLoggedIn;
-    if(this.isLoggedIn){
-      this.calculateItem();
-    }
+    this.items = [
+      {
+        label: 'Profile',
+        icon: 'pi pi-fw pi-user',
+        routerLink: 'profile'
+      },
+      {
+        label: 'Logout',
+        icon: 'pi pi-fw pi-sign-out',
+        command: () => {
+          this.logout();
+        },
+      },
+    ];
   }
   handleLogin() {
-      this.authService.loggin();
+    this.authService.loggin();
   }
   logout() {
     this.authService.logOut();
-  }
-  calculateItem() {
-    this.cartService
-      .getAllItemsInCart(this.authService.userId)
-      .subscribe((data:any) => {
-        for(let iterator of data.items) {
-          this.totalItem += iterator.quantity;
-        }
-      });
   }
 }

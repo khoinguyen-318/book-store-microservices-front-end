@@ -53,6 +53,11 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-shopping-cart',
                         items: [
                             {
+                                label: 'List Order',
+                                icon: 'pi pi-fw pi-list',
+                                routerLink: ['/order'],
+                            },
+                            {
                                 label: 'Order created',
                                 icon: 'pi pi-fw pi-plus',
                                 routerLink: ['/order/created'],
@@ -74,32 +79,32 @@ export class AppMenuComponent implements OnInit {
                             },
                         ],
                     },
-                    {
-                        label: 'User',
-                        icon: 'pi pi-fw pi-users',
-                        items: [
-                            {
-                                label: 'Order created',
-                                icon: 'pi pi-fw pi-plus',
-                                routerLink: ['/order/created'],
-                            },
-                            {
-                                label: 'Order rejected',
-                                icon: 'pi pi-fw pi-list',
-                                routerLink: ['/order/rejected'],
-                            },
-                            {
-                                label: 'Order canceled',
-                                icon: 'pi pi-fw pi-list',
-                                routerLink: ['/order/canceled'],
-                            },
-                            {
-                                label: 'Order completed',
-                                icon: 'pi pi-fw pi-list',
-                                routerLink: ['/order/completed'],
-                            },
-                        ],
-                    },
+                    // {
+                    //     label: 'User',
+                    //     icon: 'pi pi-fw pi-users',
+                    //     items: [
+                    //         {
+                    //             label: 'Order created',
+                    //             icon: 'pi pi-fw pi-plus',
+                    //             routerLink: ['/order/created'],
+                    //         },
+                    //         {
+                    //             label: 'Order rejected',
+                    //             icon: 'pi pi-fw pi-list',
+                    //             routerLink: ['/order/rejected'],
+                    //         },
+                    //         {
+                    //             label: 'Order canceled',
+                    //             icon: 'pi pi-fw pi-list',
+                    //             routerLink: ['/order/canceled'],
+                    //         },
+                    //         {
+                    //             label: 'Order completed',
+                    //             icon: 'pi pi-fw pi-list',
+                    //             routerLink: ['/order/completed'],
+                    //         },
+                    //     ],
+                    // },
                     {
                         label: 'Shipping',
                         icon: 'pi pi-fw pi-truck',
@@ -152,6 +157,24 @@ export class AppMenuComponent implements OnInit {
                         label: 'Mongo express',
                         icon: 'pi pi-fw pi-table',
                         url: [API.MONGOEXPRESS],
+                        target: '_blank',
+                    },
+                    {
+                        label: 'Zipkin',
+                        icon: 'pi pi-fw pi-cog',
+                        url: [API.ZIPKIN],
+                        target: '_blank',
+                    },
+                    {
+                        label: 'Prometheus',
+                        icon: 'pi pi-fw pi-chart-line',
+                        url: [API.PROMETHEUS],
+                        target: '_blank',
+                    },
+                    {
+                        label: 'Grafana',
+                        icon: 'pi pi-fw pi-chart-bar',
+                        url: [API.GRAFANA],
                         target: '_blank',
                     },
                     {
